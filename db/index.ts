@@ -9,3 +9,4 @@ const db = drizzle(pool, { schema });
 
 export default db;
 console.log("hi");
+console.log("hqq");
