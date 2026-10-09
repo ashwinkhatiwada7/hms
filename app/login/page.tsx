@@ -1,19 +1,13 @@
 import LoginForm from "@/app/login/login-form"
-import { auth } from "@/lib/auth"
-import { getDashboardForRole } from "@/lib/get-dashboard-for-role"
-import { headers } from "next/headers"
-import { redirect } from "next/navigation"
+import LoginGate from "@/app/login/login-gate"
+import { Suspense } from "react"
 
 export default async function LoginPage() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  })
-
-  const dashboard = session ? getDashboardForRole(session.user.role) : null
-  if (dashboard) redirect(dashboard)
-
   return (
     <div className="relative min-h-screen w-full bg-white">
+      <Suspense fallback={null}>
+        <LoginGate />
+      </Suspense>
       <div
         className="absolute inset-0 z-0 animate-in duration-1000 ease-out fade-in motion-reduce:animate-none"
         style={{

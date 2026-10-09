@@ -1,19 +1,27 @@
-import ErrorPage from "@/utils/error-page"
-import { ErrorResolver } from "@/utils/error-resolver"
+import ErrorPage from "@/utils/error-page";
+import { ErrorResolver } from "@/utils/error-resolver";
 
-import { getOrgSubscriptionAction } from "../action/org-subscription"
-import AccountManagement from "./account-management"
+import { getOrgSubscriptionAction } from "../action/org-subscription";
+import AccountManagement from "./account-management";
 
 export default async function Account() {
   try {
-    const response = await getOrgSubscriptionAction({})
+    const response = await getOrgSubscriptionAction({});
 
     if (!response.success) {
-      return <ErrorPage message={response.message ?? "Failed to load account"} />
+      return (
+        <ErrorPage message={response.message ?? "Failed to load account"} />
+      );
     }
 
-    return <AccountManagement subscription={response.data} />
+    return (
+      <AccountManagement
+        subscription={response.data.current}
+        outstanding={response.data.outstanding}
+        totalDue={response.data.totalDue}
+      />
+    );
   } catch (error) {
-    return <ErrorResolver error={error} />
+    return <ErrorResolver error={error} />;
   }
 }

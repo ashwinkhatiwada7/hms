@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import TuitionDetail from "./_components/tuition-detail"
 
 export default function page({
@@ -5,5 +6,9 @@ export default function page({
 }: {
   params: Promise<{ tuitionId: string }>
 }) {
-  return <TuitionDetail params={params} />
+  return (
+    <Suspense fallback={<p className="text-sm">Loading…</p>}>
+      <TuitionDetail params={params} />
+    </Suspense>
+  )
 }

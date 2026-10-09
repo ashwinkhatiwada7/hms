@@ -9,9 +9,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { HostelDetail } from "@/types/hostels-types";
-
-import AssignSubscriptionDialog from "./assign-subscription-dialog";
 import CancelSubscriptionButton from "./cancel-subscription-button";
+import AssignSubscriptionDialog from "./assign-subscription-dialog";
 
 type SubscriptionCardProps = {
   hostelId: string;
@@ -42,6 +41,19 @@ function statusBadgeVariant(status: string) {
   }
 }
 
+function paymentBadgeVariant(status: string) {
+  switch (status) {
+    case "paid":
+      return "default" as const;
+    case "partial":
+      return "outline" as const;
+    case "waived":
+      return "secondary" as const;
+    default:
+      return "destructive" as const;
+  }
+}
+
 export default function SubscriptionCard({
   hostelId,
   subscription,
@@ -61,11 +73,25 @@ export default function SubscriptionCard({
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-2xl font-bold">
-              {subscription.planName}
-            </span>
+            <span className="text-2xl font-bold">{subscription.planName}</span>
             <span className="text-sm text-muted-foreground">
               Rs. {subscription.priceAtSignup}
+            </span>
+          </div>
+          <div className="flex items-center justify-between text-sm">
+            <Badge variant={paymentBadgeVariant(subscription.paymentStatus)}>
+              {subscription.paymentStatus}
+            </Badge>
+            <span className="text-muted-foreground">
+              Paid Rs. {subscription.paidAmount} · Due Rs.{" "}
+              {Math.max(
+                0,
+                Number(subscription.priceAtSignup) -
+                  Number(subscription.paidAmount),
+              ).toFixed(2)}
+              {subscription.paymentMethod
+                ? ` · ${subscription.paymentMethod}`
+                : null}
             </span>
           </div>
           <div className="grid grid-cols-2 gap-2 text-sm">
@@ -87,14 +113,12 @@ export default function SubscriptionCard({
             </div>
           </div>
           <div className="flex gap-2 pt-2">
-            <AssignSubscriptionDialog
+            {/* <AssignSubscriptionDialog
               hostelId={hostelId}
               availablePlans={availablePlans}
-            />
+            /> */}
             {subscription.status === "active" && (
-              <CancelSubscriptionButton
-                subscriptionId={subscription.id}
-              />
+              <CancelSubscriptionButton subscriptionId={subscription.id} />
             )}
           </div>
         </CardContent>

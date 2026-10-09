@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 import LodgingDetail from "./_components/lodging-detail"
 
 export default function page({
@@ -6,5 +6,9 @@ export default function page({
 }: {
   params: Promise<{ lodgingId: string }>
 }) {
-  return <LodgingDetail params={params} />
+  return (
+    <Suspense fallback={<p className="text-sm">Loading…</p>}>
+      <LodgingDetail params={params} />
+    </Suspense>
+  )
 }

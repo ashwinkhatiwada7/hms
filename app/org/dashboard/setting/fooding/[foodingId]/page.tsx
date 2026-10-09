@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import FoodingDetail from "./_components/fooding-detail"
 
 export default function page({
@@ -5,5 +6,9 @@ export default function page({
 }: {
   params: Promise<{ foodingId: string }>
 }) {
-  return <FoodingDetail params={params} />
+  return (
+    <Suspense fallback={<p className="text-sm">Loading…</p>}>
+      <FoodingDetail params={params} />
+    </Suspense>
+  )
 }

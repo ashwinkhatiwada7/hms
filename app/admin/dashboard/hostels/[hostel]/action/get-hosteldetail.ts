@@ -99,6 +99,10 @@ export const getHostelDetailAction = withAuth<
         maxStaffSnapshot: organizationSubscription.maxStaffSnapshot,
         nextBillingDate: organizationSubscription.nextBillingDate,
         startedAt: organizationSubscription.startedAt,
+        paymentStatus: organizationSubscription.paymentStatus,
+        paidAmount: organizationSubscription.paidAmount,
+        paidAt: organizationSubscription.paidAt,
+        paymentMethod: organizationSubscription.paymentMethod,
       })
       .from(organizationSubscription)
       .where(

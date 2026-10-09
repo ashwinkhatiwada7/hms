@@ -14,8 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-import { cancelSubscriptionAction } from "../action/cancel-subscription";
+import { cancelSubscriptionAction } from "../../action/cancel-subscription";
 
 type CancelSubscriptionButtonProps = {
   subscriptionId: string;

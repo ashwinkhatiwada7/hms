@@ -4,7 +4,7 @@ import Account from "./_components/account";
 export default function Page() {
   return (
     <div>
-      <Suspense>
+      <Suspense fallback={"loading..."}>
         <Account />
       </Suspense>
     </div>

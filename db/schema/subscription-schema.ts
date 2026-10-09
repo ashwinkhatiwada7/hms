@@ -58,7 +58,12 @@ export const subscriptionPlan = pgTable(
 
 export const organizationSubscriptionStatus = pgEnum(
   "organization_subscription_status",
-  ["active", "past_due", "cancelled"],
+  ["active", "past_due", "cancelled", "expired"],
+);
+
+export const subscriptionPaymentStatus = pgEnum(
+  "subscription_payment_status",
+  ["unpaid", "paid", "partial", "waived"],
 );
 
 export const organizationSubscription = pgTable(
@@ -90,6 +95,21 @@ export const organizationSubscription = pgTable(
     startedAt: timestamp("started_at").notNull().defaultNow(),
     nextBillingDate: date("next_billing_date").notNull(),
     cancelledAt: timestamp("cancelled_at"),
+    paymentStatus: subscriptionPaymentStatus("payment_status")
+      .notNull()
+      .default("unpaid"),
+    paidAmount: decimal("paid_amount", {
+      precision: 10,
+      scale: 2,
+    })
+      .notNull()
+      .default("0.00"),
+    paidAt: timestamp("paid_at"),
+    paymentMethod: text("payment_method"),
+    paidBy: text("paid_by").references(() => user.id, {
+      onDelete: "set null",
+      onUpdate: "cascade",
+    }),
     createdBy: text("created_by").references(() => user.id, {
       onDelete: "set null",
       onUpdate: "cascade",
@@ -113,9 +133,17 @@ export const organizationSubscription = pgTable(
       table.status,
       table.nextBillingDate,
     ),
+    index("organization_subscription_index_payment_status").on(
+      table.status,
+      table.paymentStatus,
+    ),
     check(
       "organization_subscription_price_non_negative",
       sql`${table.priceAtSignup} >= 0`,
+    ),
+    check(
+      "organization_subscription_paid_amount_non_negative",
+      sql`${table.paidAmount} >= 0`,
     ),
   ],
 );

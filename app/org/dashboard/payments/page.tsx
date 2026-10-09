@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 import Payment from "./_components/payment"
 
 export default function page({
@@ -10,5 +10,9 @@ export default function page({
     studentId: string
   }>
 }) {
-  return <Payment searchParams={searchParams} />
+  return (
+    <Suspense fallback={<p className="text-sm">Loading payments…</p>}>
+      <Payment searchParams={searchParams} />
+    </Suspense>
+  )
 }

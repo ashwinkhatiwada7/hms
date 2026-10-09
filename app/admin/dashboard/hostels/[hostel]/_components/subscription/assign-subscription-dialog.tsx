@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select";
 import { HostelDetail } from "@/types/hostels-types";
 
-import { assignSubscriptionAction } from "../action/assign-subscription";
+import { assignSubscriptionAction } from "../../action/assign-subscription";
 
 type AssignSubscriptionDialogProps = {
   hostelId: string;
@@ -69,7 +69,7 @@ export default function AssignSubscriptionDialog({
       <DialogTrigger asChild>
         <Button onClick={() => setOpen(true)}>Assign Plan</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="">
         <DialogTitle>Assign subscription plan</DialogTitle>
         <DialogDescription>
           Choose a plan for this hostel. The current active plan (if any) will
@@ -78,16 +78,14 @@ export default function AssignSubscriptionDialog({
 
         <div className="py-4">
           <Select value={planId} onValueChange={setPlanId}>
-            <SelectTrigger aria-label="Select a plan">
+            <SelectTrigger className="w-full" aria-label="Select a plan">
               <SelectValue placeholder="Select a plan…" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="w-full  ">
               {availablePlans.map((plan) => (
                 <SelectItem key={plan.id} value={plan.id}>
                   {plan.name}
-                  {plan.price
-                    ? ` — Rs. ${plan.price}`
-                    : " — Custom pricing"}
+                  {plan.price ? ` — Rs. ${plan.price}` : " — Custom pricing"}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -96,13 +94,8 @@ export default function AssignSubscriptionDialog({
           {selectedPlan && (
             <div className="mt-4 space-y-1 text-sm text-muted-foreground">
               <p>{selectedPlan.description}</p>
-              <p>
-                Students:{" "}
-                {selectedPlan.maxStudents ?? "Unlimited"}
-              </p>
-              <p>
-                Staff: {selectedPlan.maxStaff ?? "Unlimited"}
-              </p>
+              <p>Students: {selectedPlan.maxStudents ?? "Unlimited"}</p>
+              <p>Staff: {selectedPlan.maxStaff ?? "Unlimited"}</p>
               <p>
                 Price:{" "}
                 {selectedPlan.price

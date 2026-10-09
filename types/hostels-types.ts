@@ -70,6 +70,10 @@ export type HostelDetail = {
     maxStaffSnapshot: number | null;
     nextBillingDate: string;
     startedAt: Date;
+    paymentStatus: "unpaid" | "paid" | "partial" | "waived";
+    paidAmount: string;
+    paidAt: Date | null;
+    paymentMethod: string | null;
   } | null;
   availablePlans: Array<{
     id: string;

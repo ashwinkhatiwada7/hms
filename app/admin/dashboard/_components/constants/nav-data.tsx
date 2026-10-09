@@ -6,6 +6,7 @@ import {
   FolderKanban,
   FrameIcon,
   GalleryVerticalEndIcon,
+  LayoutDashboard,
   MapIcon,
   PieChartIcon,
   PlusIcon,
@@ -31,11 +32,11 @@ export const data = {
     },
   ],
 
-  quickActions: [
+  Dashboard: [
     {
-      title: "Create Hostel",
-      url: "#",
-      icon: <PlusIcon />,
+      title: "Dashboard",
+      url: "/admin/dashboard",
+      icon: <LayoutDashboard />,
     },
   ],
   Hostels: [

@@ -1,5 +1,23 @@
-import React from "react"
+import React, { Suspense } from "react";
+import Billing from "./_components/dashboard/billing";
 
-export default function AdminDashboardPage() {
-  return <div>Admin Dashboard</div>
+type AdminDashboardPageProps = {
+  searchParams?: Promise<{
+    search?: string;
+    page?: string;
+    perPage?: string;
+    status?: string;
+  }>;
+};
+
+export default function AdminDashboardPage({
+  searchParams,
+}: AdminDashboardPageProps) {
+  return (
+    <div className="py-2">
+      <Suspense fallback={<p className="text-sm">Loading billing…</p>}>
+        <Billing searchParams={searchParams} />
+      </Suspense>
+    </div>
+  );
 }

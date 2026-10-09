@@ -5,9 +5,7 @@ type HostelDetailProps = {
   params: Promise<{ hostel: string }>;
 };
 
-export default async function HostelDetailPage({
-  params,
-}: HostelDetailProps) {
+export default async function HostelDetailPage({ params }: HostelDetailProps) {
   const { hostel: hostelId } = await params;
   const response = await getHostelDetailAction({ hostelId });
 

@@ -95,7 +95,11 @@ export function NavUser({
 
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  router.push(`/org/dashboard/account`);
+                }}
+              >
                 <BadgeCheckIcon />
                 Account
               </DropdownMenuItem>

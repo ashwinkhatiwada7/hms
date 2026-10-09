@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 import Invoices from "./_components/invoices"
 
 export default async function page({
@@ -10,5 +10,9 @@ export default async function page({
     perPage: string
   }>
 }) {
-  return <Invoices searchParams={searchParams} />
+  return (
+    <Suspense fallback={<p className="text-sm">Loading invoices…</p>}>
+      <Invoices searchParams={searchParams} />
+    </Suspense>
+  )
 }

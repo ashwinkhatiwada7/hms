@@ -56,7 +56,7 @@ export const assignSubscriptionAction = withAuth<
       );
 
     const nextBilling = new Date();
-    nextBilling.setDate(nextBilling.getDate() + 30);
+    nextBilling.setFullYear(nextBilling.getFullYear() + 1);
 
     await db.insert(organizationSubscription).values({
       organizationId: hostelId,
@@ -69,10 +69,17 @@ export const assignSubscriptionAction = withAuth<
       startedAt: new Date(),
       nextBillingDate: nextBilling.toISOString().split("T")[0],
       createdBy: session?.user?.id ?? null,
+      // New yearly term starts unpaid; admin marks it paid from the dashboard.
+      paymentStatus: plan.price === null ? "waived" : "unpaid",
+      paidAmount: "0.00",
     });
 
     revalidatePath(`/admin/dashboard/hostels/${hostelId}`);
-    return { success: true, message: `Subscribed to "${plan.name}" plan`, data: null };
+    return {
+      success: true,
+      message: `Subscribed to "${plan.name}" plan`,
+      data: null,
+    };
   } catch (error) {
     console.error(error);
     return { success: false, message: "Failed to assign subscription" };

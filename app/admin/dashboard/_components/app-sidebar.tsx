@@ -14,10 +14,13 @@ import {
 import { CollapsibleNav } from "./collapsible-nav";
 import { data } from "./constants/nav-data";
 import { NavUser } from "./nav-user";
+import { NavMenu } from "./nav-menu";
 
 function useActiveNav(pathname: string) {
   const hostelsActive = pathname.startsWith("/admin/dashboard/hostels");
-  const subscriptionsActive = pathname.startsWith("/admin/dashboard/subscriptions");
+  const subscriptionsActive = pathname.startsWith(
+    "/admin/dashboard/subscriptions",
+  );
 
   return {
     Hostels: data.Hostels.map((item) => ({
@@ -59,6 +62,7 @@ export function AppSidebar({
         <NavUser user={user} />
       </SidebarHeader>
       <SidebarContent>
+        <NavMenu label="Dashboard" items={data.Dashboard} />
         <CollapsibleNav label="Hostels" items={activeNav.Hostels} />
         <CollapsibleNav label="Subscriptions" items={activeNav.Subscriptions} />
       </SidebarContent>

@@ -22,7 +22,7 @@ import { HostelDetail } from "@/types/hostels-types";
 
 import OwnerTable from "./owner-table";
 import OwnerResetPasswordDialog from "./reset-owner-password-dialog";
-import SubscriptionCard from "./subscription-card";
+import SubscriptionCard from "./subscription/subscription-card";
 import DeleteHostelDialog from "./delete-hostel-dialog";
 
 type HostelDetailManagementProps = {
